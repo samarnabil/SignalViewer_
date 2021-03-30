@@ -165,7 +165,7 @@ class Ui_MainWindow(object):
         and calls the readData function"""
         self.filename = QFileDialog.getOpenFileName(filter = "txt (*.txt)")[0]
         print("File :", self.filename)
-        self.mode ='new'
+        
         self.readData()
         
         
@@ -221,15 +221,19 @@ class Ui_MainWindow(object):
             self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
 
             self.canv.axes.set_ylabel('Amplitude (mV)')
-            #labels msh zahreen
+
             
             
             #Draw Spectrogram
             self.canv.axes2.set_xlabel('Time (seconds)')
             self.canv.axes.set_ylabel(' Frequency (Hz)')
             
-            T = fft(self.x[self.start: self.end])
-            self.canv.axes2.specgram(T)
+            # T = fft(self.x[self.start: self.end])
+            # self.canv.axes2.specgram(T)
+            
+            powerSpectrum, freqenciesFound, time, imageAxis = self.canv.axes2.specgram(self.y, Fs = 1024 , NFFT = 32, noverlap = 16)
+            self.canv.axes2.set_ylim([0, 200])
+
             
             self.canv.show()
         else:
@@ -243,8 +247,11 @@ class Ui_MainWindow(object):
             self.canv.axes2.set_xlabel('Time (seconds)')
             self.canv.axes.set_ylabel(' Frequency (Hz)')
             
-            T = fft(self.x[self.start: self.end])
-            self.canv.axes2.specgram(T)
+            # T = fft(self.x[self.start: self.end])
+            # self.canv.axes2.specgram(T)
+            
+            powerSpectrum, freqenciesFound, time, imageAxis = self.canv.axes2.specgram(self.y, Fs = 1024 , NFFT = 32, noverlap = 16)
+            self.canv.axes2.set_ylim([0, 200])
             
             self.canv.draw() 
             
@@ -277,6 +284,8 @@ class Ui_MainWindow(object):
             
     def scrollRight(self):
         print("RIGHTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+        
+        self.mode= 'stop'
         self.start = self.end
         self.end += 500
         #draw
@@ -287,6 +296,8 @@ class Ui_MainWindow(object):
 
     def scrollLeft(self):
         print("LEEEEEEEEEEEEEEFT")
+        
+        self.mode= 'stop'
         self.end = self.start
         self.start -= 500
         #draw
@@ -297,6 +308,7 @@ class Ui_MainWindow(object):
 
     def zoomIn(self):
         
+        self.mode= 'stop'
         self.zoomFactor+=.5
         self.start = 0
         self.end = 500
@@ -313,6 +325,7 @@ class Ui_MainWindow(object):
 
     def zoomOut(self):
         
+        self.mode= 'stop'
         self.zoomFactor-=.5
         self.start = 0
         self.end = 500
@@ -339,7 +352,7 @@ class Ui_MainWindow(object):
         self.axs[1].set(xlabel= 'Time (seconds)')
         self.axs[1].set(ylabel= 'Frequency (Hz)')
         self.axs[1].set(ylabel= 'Frequency (Hz)')
-        plt.show()
+        # plt.show()
         return self.fig
     
     def pdfGenerator(self):
