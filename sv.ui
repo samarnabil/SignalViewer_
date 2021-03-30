@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1014</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Signal Viewer</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>line-chart.png</normaloff>line-chart.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="3">
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>Scroll Left</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>dragL.png</normaloff>dragL.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+L</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="text">
+         <string>Scroll Right</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>dragR.png</normaloff>dragR.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+R</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>Zoom In</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>zoom-in-button.png</normaloff>zoom-in-button.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+N</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>296</width>
+          <height>56</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="text">
+         <string>Zoom Out</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>zoom-out.png</normaloff>zoom-out.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+U</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>Export</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>export.png</normaloff>export.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+E</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QPushButton" name="pushButton_7">
+        <property name="text">
+         <string>Play</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>play.png</normaloff>play.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Open</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>open.png</normaloff>open.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+O</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="text">
+         <string>Stop</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>stop.png</normaloff>stop.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1014</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
