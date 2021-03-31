@@ -347,11 +347,13 @@ class Ui_MainWindow(object):
         self.fig.suptitle('EEG Signal')
         self.axs[0].plot(x[start:end],y[start:end])
         self.axs[0].set(ylabel= "Amplitude (mVolts)")
-        self.T = fft(x[start:end])
-        self.axs[1].specgram(self.T)
+        # self.T = fft(x[start:end])
+        # self.axs[1].specgram(self.T)
+        self.axs[1].specgram(self.y, Fs = 1024 , NFFT = 32, noverlap = 16)
+        self.axs[1].set_ylim([0, 200])
         self.axs[1].set(xlabel= 'Time (seconds)')
         self.axs[1].set(ylabel= 'Frequency (Hz)')
-        self.axs[1].set(ylabel= 'Frequency (Hz)')
+
         # plt.show()
         return self.fig
     
