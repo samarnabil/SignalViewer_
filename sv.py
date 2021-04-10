@@ -1,4 +1,7 @@
-# -*- coding: utf-8 -*-
+ 
+ 
+ 
+ # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'sv.ui'
 #
@@ -126,16 +129,16 @@ class Ui_MainWindow(object):
         
         self.filename = ''
         self.canv = MatplotlibCanvas(self)
-        self.df = []
+        #self.df = []
         
-        self.x = np.array([])
-        self.y = np.array([])
-        self.x1 = np.array([])
-        self.y1 = np.array([])
-        self.x2 = np.array([])
-        self.y2 = np.array([])
-        self.x3 = np.array([])
-        self.y3 = np.array([])
+        self.xAxisTime = np.array([])
+        self.yAxisAmplitude = np.array([])
+        self.xAxisTime1 = np.array([])
+        self.yAxisAmplitude1 = np.array([])
+        self.xAxisTime2 = np.array([])
+        self.yAxisAmplitude2 = np.array([])
+        self.xAxisTime3 = np.array([])
+        self.yAxisAmplitude3 = np.array([])
         self.transition=0
         self.zoomFactor=0
         self.counter = 0
@@ -146,7 +149,7 @@ class Ui_MainWindow(object):
         
         # Setup a timer to trigger the redraw by calling update_plot.
         self.timer = QtCore.QTimer()
-        self.timer.setInterval(500)      #milliseconds
+        self.timer.setInterval(1000)      #milliseconds
         self.timer.timeout.connect(self.update_plot)
         self.timer.start()
         
@@ -178,26 +181,26 @@ class Ui_MainWindow(object):
         
         #empty the Numpy arrays
         if self.counter == 1:
-            self.x = np.delete(self.x,[i for i in range(len(self.x))])
-            self.y = np.delete(self.y ,[i for i in range(len(self.y))])
+            self.xAxisTime= np.delete(self.xAxisTime,[counter for counter in range(len(self.xAxisTime))])
+            self.yAxisAmplitude = np.delete(self.yAxisAmplitude ,[counter for counter in range(len(self.yAxisAmplitude))])
 
         
         for row in data:
             time,reading = row.split(",")
             time=float(time)
             reading=float(reading)
-            self.x = np.insert(self.x, len(self.x), time)
-            self.y = np.insert(self.y, len(self.y), reading)
+            self.xAxisTime = np.insert(self.xAxisTime, len(self.xAxisTime), time)
+            self.yAxisAmplitude = np.insert(self.yAxisAmplitude, len(self.yAxisAmplitude), reading)
         if self.transition == 1:
-            self.x1 = np.insert(self.x1, len(self.x1), self.x)
-            self.y1 = np.insert(self.y1, len(self.y1), self.y)
+            self.xAxisTime1 = np.insert(self.xAxisTime1, len(self.xAxisTime1), self.xAxisTime)
+            self.yAxisAmplitude1 = np.insert(self.yAxisAmplitude1, len(self.yAxisAmplitude1), self.yAxisAmplitude)
             print("Ayooo")
         elif self.transition == 2:
-            self.x2 = np.insert(self.x2, len(self.x2), self.x)
-            self.y2 = np.insert(self.y2, len(self.y2), self.y) 
+            self.xAxisTime2 = np.insert(self.xAxisTime2, len(self.xAxisTime2), self.xAxisTime)
+            self.yAxisAmplitude2 = np.insert(self.yAxisAmplitude2, len(self.yAxisAmplitude2), self.yAxisAmplitude) 
         elif self.transition ==3:
-            self.x3 = np.insert(self.x3, len(self.x3), self.x)
-            self.y3 = np.insert(self.y3, len(self.y3), self.y)     
+            self.xAxisTime3= np.insert(self.xAxisTime3, len(self.xAxisTime3), self.xAxisTime)
+            self.yAxisAmplitude3 = np.insert(self.yAxisAmplitude3, len(self.yAxisAmplitude3), self.yAxisAmplitude)     
 
             
         print('ready')
@@ -218,7 +221,7 @@ class Ui_MainWindow(object):
             self.verticalLayout.addWidget(self.canv)
             
             
-            self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+            self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
 
             self.canv.axes.set_ylabel('Amplitude (mV)')
 
@@ -231,7 +234,7 @@ class Ui_MainWindow(object):
             # T = fft(self.x[self.start: self.end])
             # self.canv.axes2.specgram(T)
             
-            powerSpectrum, freqenciesFound, time, imageAxis = self.canv.axes2.specgram(self.y, Fs = 1024 , NFFT = 32, noverlap = 16)
+            powerSpectrum, freqenciesFound, time, imageAxis = self.canv.axes2.specgram(self.yAxisAmplitude, Fs = 1024 , NFFT = 32, noverlap = 16)
             self.canv.axes2.set_ylim([0, 200])
 
             
@@ -240,7 +243,7 @@ class Ui_MainWindow(object):
             #Draw Signal
             self.canv.axes.cla()  # Clear the canvas.
             self.canv.axes.set_ylabel('Amplitude (mV)')
-            self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+            self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
             
             #Draw Spectrogram
             self.canv.axes2.cla()  # Clear the canvas.
@@ -250,7 +253,7 @@ class Ui_MainWindow(object):
             # T = fft(self.x[self.start: self.end])
             # self.canv.axes2.specgram(T)
             
-            powerSpectrum, freqenciesFound, time, imageAxis = self.canv.axes2.specgram(self.y, Fs = 1024 , NFFT = 32, noverlap = 16)
+            powerSpectrum, freqenciesFound, time, imageAxis = self.canv.axes2.specgram(self.yAxisAmplitude, Fs = 1024 , NFFT = 32, noverlap = 16)
             self.canv.axes2.set_ylim([0, 200])
             
             self.canv.draw() 
@@ -261,22 +264,22 @@ class Ui_MainWindow(object):
     def update_plot(self):
         """ This function will implement the realtime effect"""
 
-        if self.end == len(self.x) and self.mode == 'play':
+        if self.end == len(self.xAxisTime) and self.mode == 'play':
             self.start = 0
             self.end = 500
             #draw
             self.canv.axes.cla()  # Clear the canvas.
-            self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+            self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
             print('redraw')
                 
             self.canv.draw() 
             
-        elif self.end != len(self.x)-1 and self.mode == 'play':
+        elif self.end != len(self.xAxisTime)-1 and self.mode == 'play':
             self.start = self.end
             self.end += 500
             #draw
             self.canv.axes.cla()  # Clear the canvas.
-            self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+            self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
         
             self.canv.draw() 
 
@@ -290,7 +293,7 @@ class Ui_MainWindow(object):
         self.end += 500
         #draw
         self.canv.axes.cla()  # Clear the canvas.
-        self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+        self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
         self.canv.draw() 
 
 
@@ -302,7 +305,7 @@ class Ui_MainWindow(object):
         self.start -= 500
         #draw
         self.canv.axes.cla()  # Clear the canvas.
-        self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+        self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
         self.canv.draw()    
 
 
@@ -314,7 +317,7 @@ class Ui_MainWindow(object):
         self.end = 500
         #draw
         self.canv.axes.cla()  # Clear the canvas.
-        self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+        self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
         self.canv.axes.xaxis.zoom(self.zoomFactor)
         self.canv.axes.yaxis.zoom(self.zoomFactor)
     
@@ -331,7 +334,7 @@ class Ui_MainWindow(object):
         self.end = 500
         #draw
         self.canv.axes.cla()  # Clear the canvas.
-        self.canv.axes.plot(self.x[self.start:self.end], self.y[self.start:self.end])
+        self.canv.axes.plot(self.xAxisTime[self.start:self.end], self.yAxisAmplitude[self.start:self.end])
         self.canv.axes.xaxis.zoom(self.zoomFactor)
         self.canv.axes.yaxis.zoom(self.zoomFactor)
     
@@ -341,15 +344,15 @@ class Ui_MainWindow(object):
         self.canv.draw()
 
 
-    def signalDrawer(self,x,y,start,end):
+    def signalDrawer(self,xAxisTime,yAxisAmplitude,start,end):
         self.fig=plt.figure()
         self.fig, self.axs = plt.subplots(2)
         self.fig.suptitle('EEG Signal')
-        self.axs[0].plot(x[start:end],y[start:end])
+        self.axs[0].plot(xAxisTime[start:end],yAxisAmplitude[start:end])
         self.axs[0].set(ylabel= "Amplitude (mVolts)")
         # self.T = fft(x[start:end])
         # self.axs[1].specgram(self.T)
-        self.axs[1].specgram(self.y, Fs = 1024 , NFFT = 32, noverlap = 16)
+        self.axs[1].specgram(self.yAxisAmplitude, Fs = 1024 , NFFT = 32, noverlap = 16)
         self.axs[1].set_ylim([0, 200])
         self.axs[1].set(xlabel= 'Time (seconds)')
         self.axs[1].set(ylabel= 'Frequency (Hz)')
@@ -361,27 +364,27 @@ class Ui_MainWindow(object):
         pdf = matplotlib.backends.backend_pdf.PdfPages("Output.pdf")
 
         if self.transition == 1:
-            graph1=self.signalDrawer(self.x1,self.y1,self.start,self.end)
+            graph1=self.signalDrawer(self.xAxisTime1,self.yAxisAmplitude1,self.start,self.end)
             pdf.savefig(graph1)
             print("Transition 1")
         elif self.transition == 2:
-            graph1=self.signalDrawer(self.x1,self.y1,self.start,self.end)
-            graph2=self.signalDrawer(self.x2,self.y2,self.start,self.end)
+            graph1=self.signalDrawer(self.xAxisTime1,self.yAxisAmplitude1,self.start,self.end)
+            graph2=self.signalDrawer(self.xAxisTime2,self.yAxisAmplitude2,self.start,self.end)
             pdf.savefig(graph1)
             pdf.savefig(graph2)
 
             print("Transition 2")
 
         elif self.transition ==3:
-            graph1=self.signalDrawer(self.x1,self.y1,self.start,self.end)
-            graph2=self.signalDrawer(self.x2,self.y2,self.start,self.end)
-            graph3=self.signalDrawer(self.x3,self.y3,self.start,self.end)
+            graph1=self.signalDrawer(self.xAxisTime1,self.yAxisAmplitude1,self.start,self.end)
+            graph2=self.signalDrawer(self.xAxisTime2,self.yAxisAmplitude2,self.start,self.end)
+            graph3=self.signalDrawer(self.xAxisTime3,self.yAxisAmplitude3,self.start,self.end)
             pdf.savefig(graph1)
             pdf.savefig(graph2)
             pdf.savefig(graph3)
-            print(self.x1)
-            print(self.x2)
-            print(self.x3)
+            print(self.xAxisTime1)
+            print(self.xAxisTime2)
+            print(self.xAxisTime3)
             print("Transition 3")
         
 
